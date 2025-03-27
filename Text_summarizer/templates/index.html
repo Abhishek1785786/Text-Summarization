@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Summarizer</h1>
+    </header>
+    
+    <div class="container">
+        <div class="summary-box">
+            <div class="toolbar">
+                <span class="tab active">Abstractive Text Summarizer</span>
+            </div>
+            
+            <form action="/" method="POST">
+                <div class="input-section">
+                    <textarea name="input_text" placeholder="Start typing or paste your content here...">{{ input_text }}</textarea>
+                </div>
+                
+                <div class="slider-container">
+                    <label>Short</label>
+                    <input type="range" name="length_factor" min="1" max="100" value="{{ length_factor }}" class="slider" id="lengthSlider" oninput="updateSliderValue()">
+                    <label>Long</label>
+                    <span id="sliderValue">{{ length_factor }}</span>%
+                </div>
+                
+                <button class="summarize-btn" type="submit">Summarize</button>
+            </form>
+
+            {% if summary %}
+            <div class="output-section">
+                <h3>Summarized Text:</h3>
+                <p>{{ summary }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function updateSliderValue() {
+            document.getElementById("sliderValue").innerText = document.getElementById("lengthSlider").value;
+        }
+    </script>
+
+</body>
+</html>
